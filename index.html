@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Demo Web - Responsive for All Devices</title>
+    <title>Love Confession - Responsive</title>
     <style>
         body {
             background: url('cute.jpeg') no-repeat center center fixed;
@@ -14,16 +14,13 @@
             text-align: center;
             margin: 0;
             padding: 0;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            min-height: 100vh;
+            overflow: hidden;
         }
         h1 {
             font-size: 3em;
             text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.7);
-            margin: 20px 0;
+            animation: blink 1.5s infinite;
+            margin-top: 20px;
         }
         p {
             font-size: 1.5em;
@@ -42,14 +39,68 @@
                 font-size: 1.2em;
             }
         }
+        @keyframes blink {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.5; }
+        }
+        .heart {
+            position: absolute;
+            width: 20px;
+            height: 20px;
+            background-color: rgba(255, 0, 0, 0.7);
+            transform: rotate(-45deg);
+            animation: fall 5s linear infinite;
+        }
+        .heart::before,
+        .heart::after {
+            content: '';
+            position: absolute;
+            width: 20px;
+            height: 20px;
+            background-color: inherit;
+            border-radius: 50%;
+        }
+        .heart::before {
+            top: -10px;
+            left: 0;
+        }
+        .heart::after {
+            top: 0;
+            left: 10px;
+        }
+        @keyframes fall {
+            0% {
+                top: -10%;
+                left: calc(100% * var(--i));
+                opacity: 1;
+                transform: scale(1) rotate(0deg);
+            }
+            100% {
+                top: 110%;
+                left: calc(100% * var(--i) - 30px);
+                opacity: 0;
+                transform: scale(0.5) rotate(360deg);
+            }
+        }
     </style>
 </head>
 <body>
-    <h1>Welcome to My Responsive Demo</h1>
-    <p>Enjoy the experience on both mobile and laptop screens!</p>
+    <h1>I Love You! ❤️</h1>
+    <p>This is my heartfelt confession to you!</p>
     <audio controls autoplay loop>
         <source src="tinhnaycoem-speedup.mp3" type="audio/mpeg">
         Your browser does not support the audio element.
     </audio>
+
+    <script>
+        // Create multiple falling hearts
+        for (let i = 0; i < 50; i++) {
+            let heart = document.createElement('div');
+            heart.className = 'heart';
+            heart.style.setProperty('--i', Math.random());
+            heart.style.animationDuration = `${Math.random() * 3 + 3}s`;
+            document.body.appendChild(heart);
+        }
+    </script>
 </body>
 </html>
