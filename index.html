@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Confession Web</title>
+  <style>
+    body {
+      margin: 0;
+      height: 100vh;
+      background: url('./cute.jpeg') no-repeat center center;
+      background-size: contain;
+      font-family: 'Patrick Hand', cursive;
+      color: #fff;
+      text-align: center;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+    }
+    h1 {
+      font-size: 3rem;
+      text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+      margin: 20px 0;
+      transition: opacity 1s ease;
+    }
+    .heart {
+      position: absolute;
+      width: 30px;
+      height: 30px;
+      background: red;
+      transform: rotate(-45deg);
+      animation: heartFall 10s linear infinite;
+      opacity: 0.8;
+      transition: transform 0.5s ease, opacity 0.5s ease;
+    }
+    .heart::before,
+    .heart::after {
+      content: '';
+      position: absolute;
+      width: 30px;
+      height: 30px;
+      background: red;
+      border-radius: 50%;
+    }
+    .heart::before {
+      top: -15px;
+      left: 0;
+    }
+    .heart::after {
+      top: 0;
+      left: -15px;
+    }
+    .heart:hover {
+      transform: scale(1.2) rotate(0deg);
+      opacity: 1;
+      background: #ff69b4;
+    }
+    @keyframes heartFall {
+      0% { transform: translateY(-100px) rotate(0deg); opacity: 0.9; }
+      100% { transform: translateY(110vh) rotate(360deg); opacity: 0.5; }
+    }
+    .heart-container button {
+      font-size: 1.5rem;
+      padding: 10px 20px;
+      border: none;
+      border-radius: 20px;
+      cursor: pointer;
+      background-color: #ff79c6;
+      color: white;
+      transition: background-color 0.3s;
+    }
+    .buttons button {
+      font-size: 1.2rem;
+      margin: 10px;
+      padding: 10px 20px;
+      border: none;
+      border-radius: 10px;
+      cursor: pointer;
+      background-color: #4CAF50;
+      color: white;
+    }
+    .buttons button:hover {
+      background-color: #45a049;
+    }
+    #message {
+      font-size: 2rem;
+      margin-top: 20px;
+      display: none;
+      color: #ffcccb;
+    }
+  </style>
+  <link href="https://fonts.googleapis.com/css2?family=Patrick+Hand&display=swap" rel="stylesheet">
+</head>
+<body>
+  <h1 id="main-title">Quà của lynxniee nè 🎁</h1>
+  <div class="heart-container" id="heart-container">
+    <button id="reveal-button">Ấn vào đây</button>
+  </div>
+  <div id="reveal-section" style="display: none;">
+    <h1>Bạn có muốn làm người yêu mình không? 💖</h1>
+    <div class="buttons">
+      <button id="yes-button">Yes</button>
+      <button id="no-button">No</button>
+    </div>
+    <p id="message">Yayyy! Mình cũng thích bạn lắm! 💕</p>
+  </div>
+  <audio id="background-audio" loop muted>
+    <source src="tinhnaycoem-speedup.mp3" type="audio/mpeg">
+    Trình duyệt của bạn không hỗ trợ phát nhạc.
+  </audio>
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      const heartCount = 50;
+      for (let i = 0; i < heartCount; i++) {
+        const heart = document.createElement('div');
+        heart.classList.add('heart');
+        heart.style.left = Math.random() * 100 + 'vw';
+        heart.style.animationDelay = Math.random() * 5 + 's';
+        heart.style.animationDuration = 5 + Math.random() * 5 + 's';
+        document.body.appendChild(heart);
+      }
+    });
+
+    document.getElementById('reveal-button').addEventListener('click', () => {
+      document.getElementById('reveal-section').style.display = 'block';
+      document.getElementById('heart-container').style.display = 'none';
+      document.getElementById('main-title').style.opacity = '0';
+      const audio = document.getElementById('background-audio');
+      audio.muted = false;
+      audio.play().catch(error => console.log('Không thể phát nhạc:', error));
+    });
+
+    const yesButton = document.getElementById('yes-button');
+    const message = document.getElementById('message');
+
+    yesButton.addEventListener('click', () => {
+      message.style.display = 'block';
+    });
+
+    const noButton = document.getElementById('no-button');
+    noButton.addEventListener('mouseenter', () => {
+      const randomX = Math.random() * 80 + 10;
+      const randomY = Math.random() * 80 + 10;
+      const randomColor = `#${Math.floor(Math.random() * 16777215).toString(16)}`;
+      noButton.style.position = 'absolute';
+      noButton.style.left = `${randomX}%`;
+      noButton.style.top = `${randomY}%`;
+      noButton.style.backgroundColor = randomColor;
+    });
+  </script>
+</body>
+</html>
